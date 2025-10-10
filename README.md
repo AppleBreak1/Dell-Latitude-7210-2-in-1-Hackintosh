@@ -2,6 +2,7 @@
 <br>
 
 
+
 # Hardware Specification
 ```md
 [CPU][Intel® Core™ i7-10810U]
