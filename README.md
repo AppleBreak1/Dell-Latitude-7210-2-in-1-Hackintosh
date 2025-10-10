@@ -1,7 +1,7 @@
 # Dell Latitude 7210 2-in-1
 <br>
-
-
+<img width="1275" height="765" alt="Desktop" src="https://github.com/user-attachments/assets/36b2737d-6e99-4d39-857c-a3612f268051" />
+<img width="4032" height="1500" alt="4" src="https://github.com/user-attachments/assets/6618911b-0419-485b-901a-242391db9bd2" />
 
 # Hardware Specification
 ```md
@@ -435,6 +435,7 @@ WWAN slot
       
 # Geekbench 6
 
+<img width="756" height="792" alt="Geekbench" src="https://github.com/user-attachments/assets/90603975-ba84-4542-9922-31cb4f7ec09c" />
 
 # Resources
 
