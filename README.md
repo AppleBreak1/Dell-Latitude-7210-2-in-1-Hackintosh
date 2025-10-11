@@ -377,7 +377,7 @@ Sleep/Resume
         sudo pmset -a proximitywake 0
         sudo pmset -a tcpkeepalive 0  
 
-[Standby](https://support.apple.com/en-us/101363) / Hibernatemode (S4)
+[Standby](https://support.apple.com/en-us/101363)(S4) / Hibernatemode  (Safe Sleep Arguments)
 
    From pmset Man page
    
@@ -387,7 +387,7 @@ Sleep/Resume
    
    - Hibernatemode 0
 
-     - Completely disables hibernation
+     - pmset hibernatemode to 0 (Prevents system from hibernating)
 
    - Hibernatemode 3
      
@@ -399,8 +399,12 @@ Sleep/Resume
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
       - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
       - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep(S3) or deep idle(S0) as set by standbydelay argument then decides whether to transition to standby mode(This is when HibernationFixup.kext is needed). If transitions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
+    
         
-   
+         <img width="996" height="72" alt="3" src="https://github.com/user-attachments/assets/b1abd3a2-3f61-4980-8230-03d5e0d99ef6" />
+
+
+
    - Hibernatemode 25 
 
       Hibernatemode 25 will immediately put system to standby preserving battery life.
@@ -408,6 +412,9 @@ Sleep/Resume
       - pmset standby to 1
       - Misc -> Boot -> Hibernatemode -> NVRAM
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
+    
+        <img width="946" height="42" alt="25" src="https://github.com/user-attachments/assets/906eecd2-27d6-4e46-bd55-9bb41630a42c" />
+
 
  - Note 1: Make sure to drop original DMAR table and inject modified DMAR table to load AppleVTD as original DMAR table can cause wake issue from hibernation. Or, you may just disable AppleVTD by setting DisableIoMapper quirk to Yes. 
  - Note 2: ACPI -> Quirk -> ResetHwSig -> True is required to fix issues with wake from standby(S4).
