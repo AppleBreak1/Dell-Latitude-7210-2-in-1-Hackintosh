@@ -285,13 +285,14 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 
     Sample
 
-    <img width="1505" height="388" alt="1" src="https://github.com/user-attachments/assets/f606c717-821e-4b6d-b6f5-e90f024ea6a6" />
+ 
+    <img width="700" height="429" alt="Custom Res" src="https://github.com/user-attachments/assets/20e50e5a-e22d-4177-a4a1-ffdbc804aa60" />
 
 
     Display Override: [Displays.zip](https://github.com/user-attachments/files/22691416/Displays.zip)
 
-    - DisplayVendorID: 0x4d10    (5344)
-    - DisplayProductID: 0x14e0   (19728)
+    - DisplayProductID: 0x14e0    (5344)
+    - DisplayVendorID: 0x4d10   (19728)
 
     Added Resolutions
 
