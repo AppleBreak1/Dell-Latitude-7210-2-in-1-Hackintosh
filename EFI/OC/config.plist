@@ -125,24 +125,6 @@
 				<key>All</key>
 				<false/>
 				<key>Comment</key>
-				<string>Delete USB Table</string>
-				<key>Enabled</key>
-				<true/>
-				<key>OemTableId</key>
-				<data>
-				eGhfY211dDM=
-				</data>
-				<key>TableLength</key>
-				<integer>0</integer>
-				<key>TableSignature</key>
-				<data>
-				U1NEVA==
-				</data>
-			</dict>
-			<dict>
-				<key>All</key>
-				<false/>
-				<key>Comment</key>
 				<string>Delete DMAR</string>
 				<key>Enabled</key>
 				<true/>

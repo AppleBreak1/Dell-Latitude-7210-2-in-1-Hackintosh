@@ -170,13 +170,12 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
      - SSDT-MCHC.aml     (Injects fake MCHC device)
      - SSDT-PLUG.aml     (Injects plugin type 1 to load XCPM for CPU PMGMT; No longer required beginning with Monterey 12.3)
      - SSDT-PNLF.aml     (Fixes backlight control)
-     - SSDT-USBP.aml     (ACPI USB Port Mapping Table; correctly define USB connector type for each USB ports and disable unused ports at ACPI level using GUPC and TUPC method)
+     - SSDT-USBP.aml     (ACPI USB Port Mapping; defines USB connector type for each USB ports at ACPI level)
      - SSDT-TB3HP.aml    (SSDT for Thunderbolt3 / Requires booting in Native Enumeration mode for hotplug)
      - SSDT-S0.aml       (Enables S0 deep idle)
   
    Delete:
 
-    - Drop OEM USB Table
     - Drop OEM DMAR Table 
    
    Quirks
@@ -432,9 +431,9 @@ Wi-Fi/Bluetooth
 
    You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround
    
-   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of drive.
+   On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of driver.
 
-   The particular BCM94360NG model that I have for this laptop has crash issues on windows 10 when drivers are installed. As a workaround, one of the USB-C ports needs to be occupied with USB device to prevent crash on Windows 10.
+   The particular BCM94360NG model that I have for this laptop has crash issues on windows 10 when the Wi-Fi drivers are installed. As a workaround, one of the USB-C ports needs to be occupied with USB device to prevent crash on Windows 10.
 
 
 WWAN slot
