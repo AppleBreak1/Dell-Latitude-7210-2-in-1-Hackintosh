@@ -262,9 +262,6 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
        * USB3 on USB-C ports are managed by Thunderbolt controller.
          If the TB controller is disabled, USB3 on USB-C ports are also disabled. 
 
-[Guide](https://github.com/AppleBreak1/Z490-Vision-D-Customac/tree/main/USB%20Ports)
-
-
 # Misc
 
 **Troubleshooting** (Hackintoshing & Refining)
