@@ -11,7 +11,7 @@
 
 [RAM][Samsung LPDDR3 8GB 2133Mhz] x 2 (16GB)
 
-[Display][12.3 FHD 1920 x 1280 IPS] (Sharp: SHP14E0, LQ123N1)
+[Display][12.3 FHD 1920 x 1280 IPS] (Sharp: SHP14E0/LQ123N1)
 
 [Touchscreen][WCOM48CE] (Wacom)
 
