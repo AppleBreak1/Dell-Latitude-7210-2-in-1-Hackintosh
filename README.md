@@ -315,7 +315,6 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
   CPU Powermanagement
 
   - Inject CPUFriend.kext with configured CPUFriendDataProvider.kext.
-  - Thunderbolt3 BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption is reduced by more than a watt at idle state (roughly from 3.3W to 1.7W)  
   - [VoltageShift.kext](https://github.com/sicreative/VoltageShift) to disable Intel Turbo Boost, undervolt, and set power limit to keep the temperature and fan noise down. Features like 
     BD PROCHOT may also be disabled via Voltageshift as it can read and write MSR values.
     <br>
@@ -329,34 +328,38 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
     |        [PL1][13W]
     |        [PL2][13W]
     ```
-- Configurable TDP Boot Mode can be set via UEFI variable mod
+  - Thunderbolt Configuration
 
-  For i7-10810U 
-  - Nominal: 1.1 GHz Base, 15W TDP
-  - Down: 0.8 GHz Base, 12.5W TDP
-  - Up: 1.6 GHz Base, 25W TDP
+    - BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption is reduced by more than a watt(around 1.5W) at idle state as the TB controller power stays off as long as the devices are not connected) 
+    - Booting to Windows 10 sets the mode to Native Enumeration on next boot (OS Controls TB device, hotplug works)
+    - Booting to macOS sets the mode to BIOS Assist on next boot (BIOS handles the device enumeration, TB device works only if plugged preboot)
+
+      By default, Auto Switch for BIOS Enumeration mode is enabled. (Not configurable from standard BIOS menu). This can be quite annoying with frequent dual-booting of macOS and Windows as the warning message "Thunderbolt PCIe Device Enumeration Mode Has Switched to XXXX" will pop up every time after having to boot to Windows or macOS. 
+
+      To avoid this, we can disable Auto Switch via UEFI var mod and set the enumeration mode of choice depending on personal preference. As mentioned, Native mode has higher power consumption at idle but hotplug works where as BIOS Assist mode has lower power consumption at idle but will lose TB/USB-C USB3 hotplug.
+
+
+    - Disable Auto Switch -> (VarStore: Setup, VarOffset: 0xA08)
+
+           setup_var_cv Setup 0xA08 0x1 0x0     (This will disable Auto Switch)
+           setup_var_cv Setup 0xA08 0x1 0x1     (Back to default)
   
-Thunderbolt Configuration
+    - BIOS Enumeration Mode -> VarStore: Setup, VarOffset: 0xA09)
 
-- Booting to Windows 10 sets the mode to Native Enumeration on next boot (OS Controls TB device, hotplug works)
-- Booting to macOS sets the mode to BIOS Assist on next boot (BIOS handles the device enumeration, TB device work only if plugged before booting)
+           setup_var_cv Setup 0xA08 0x1 0x1     (Native) - default
+           setup_var_cv Setup 0xA08 0x1 0x0     (BIOS Assist)
 
-  By default, Auto Switch for BIOS Enumeration mode is enabled. (Not configurable from standard BIOS menu). This can be quite annoying with frequent dual-booting of macOS and Windows as the warning message "Thunderbolt PCIe Device Enumeration Mode Has Switched to XXXX" will pop up every time after having to boot to Windows or macOS. 
+  - Configurable TDP Boot Mode can be set via UEFI variable mod
 
-  To avoid this, we can disable Auto Switch via UEFI var mod and set the enumeration mode of choice depending on personal preference. As mentioned, Native mode has higher power consumption at idle but hotplug works where as BIOS Assist mode has lower power consumption at idle but will lose TB/USB-C USB3 hotplug.
+                                                     // For i7-10810U  
+           setup_var_cv CpuSetup 0x3F 0x1 0x0        // Nominal: 1.1 GHz Base, 15W TDP
+           setup_var_cv CpuSetup 0x3F 0x1 0x1        // Down: 0.8 GHz Base, 12.5W TDP
+           setup_var_cv CpuSetup 0x3F 0x1 0x2        // Up: 1.6 GHz Base, 25W TDP
+            
+  - Power consumption can be further cut by disabling SD card reader and built-in cameras in BIOS. After disabling these devices, the total CPU package power consumption at idle reduced by roughly a watt (SD card 0.9w + cameras 0.1w) down to as low as 0.7w which is very similar to Windows side. (Disabling any other unused devices at BIOS level may help as well)
 
-
-- Disable Auto Switch -> (VarStore: Setup, VarOffset: 0xA08)
-
-       setup_var_cv Setup 0xA08 0x1 0x0     (This will disable Auto Switch)
-       setup_var_cv Setup 0xA08 0x1 0x1     (Back to default)
-  
-- BIOS Enumeration Mode -> VarStore: Setup, VarOffset: 0xA09)
-
-       setup_var_cv Setup 0xA08 0x1 0x1     (Native) - default
-       setup_var_cv Setup 0xA08 0x1 0x0     (BIOS Assist)
-
-
+    <img width="250" height="430" alt="1" src="https://github.com/user-attachments/assets/12b36867-d8a0-4893-aab3-d3b9b6eb34ca" />
+        
 Sleep/Resume
 
   - Supports S0, S3, and S4
