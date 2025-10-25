@@ -319,15 +319,36 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
     BD PROCHOT may also be disabled via Voltageshift as it can read and write MSR values.
     <br>
     
-    My Voltageshift settings as reference
-    ```md
-    |        [CPU][-150mv]
-    |  [CPU Cache][-150mv]
-    |        [GPU][-140mv]
-    | [TurboBoost][OFF]
-    |        [PL1][13W]
-    |        [PL2][13W]
-    ```
+     - My Voltageshift settings as reference
+       ```md
+       |        [CPU][-150mv]
+       |  [CPU Cache][-150mv]
+       |        [GPU][-140mv]
+       | [TurboBoost][OFF]
+       |        [PL1][13W]
+       |        [PL2][13W]
+       ```
+
+    - Setting turbo ratio Limit rather than disabling turbo boost
+
+      - MSR for turbo ratio limit is 0x1ad
+
+      - Read the values from 0x1ad and convert the resulting binary number to hex number
+
+            ./voltageshift read 0x1ad
+
+      - i7-10810u as an example after converting the binary result to hex gives
+     
+             /i7-10810u has 6 cores
+            0x282828282b2b3031 (40 n/a, 40 n/a, 40 for 6 active cores, 40 for 5 cores, 43 for 4 cores, 43 for 3 cores, 48 for 2 cores, 49 for 1 active core)
+
+      - Replace the values and modify turbo ratio limit
+     
+                                                               // i7-10810u
+            ./voltageshift write 0x1ad 0x28281e1e1e1e1e1e      // limit to 30 for all number of active cores
+            ./voltageshift write 0x1ad 0x2828242424242424      // limit to 36 for all number of active cores
+            ./voltageshift write 0x1ad 0x28281e1e1e1e1e24      // limit to 30 for 2 or more active cores and limit to 36 for 1 active core
+    
   - Thunderbolt Configuration
 
     - BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption is reduced by more than a watt(around 1.5W) at idle state as the TB controller power stays off as long as the devices are not connected) 
