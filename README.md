@@ -329,7 +329,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
        |        [PL2][13W]
        ```
 
-    - Setting turbo ratio Limit rather than disabling turbo boost
+    - Setting turbo ratio limit rather than disabling turbo boost
 
       - MSR for turbo ratio limit is 0x1ad
 
