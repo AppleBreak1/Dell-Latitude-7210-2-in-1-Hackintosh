@@ -337,9 +337,8 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 
             ./voltageshift read 0x1ad
 
-      - i7-10810u as an example after converting the binary result to hex gives
+      - i7-10810u(6cores) as an example after converting the binary result to hex gives 
      
-             /i7-10810u has 6 cores
             0x282828282b2b3031 (40 n/a, 40 n/a, 40 for 6 active cores, 40 for 5 cores, 43 for 4 cores, 43 for 3 cores, 48 for 2 cores, 49 for 1 active core)
 
       - Replace the values and modify turbo ratio limit
@@ -347,7 +346,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
                                                                // i7-10810u
             ./voltageshift write 0x1ad 0x28281e1e1e1e1e1e      // limit to 30 for all number of active cores
             ./voltageshift write 0x1ad 0x2828242424242424      // limit to 36 for all number of active cores
-            ./voltageshift write 0x1ad 0x28281e1e1e1e1e24      // limit to 30 for 2 or more active cores and limit to 36 for 1 active core
+            ./voltageshift write 0x1ad 0x28281e1e1e1e1e24      // limit to 30 for 2 to 6 active cores and limit to 36 for 1 active core
     
   - Thunderbolt Configuration
 
