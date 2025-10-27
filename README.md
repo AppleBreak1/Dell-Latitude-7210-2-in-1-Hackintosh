@@ -1,6 +1,6 @@
 # Dell Latitude 7210 2-in-1
 <br>
-<img width="1275" height="765" alt="Desktop" src="https://github.com/user-attachments/assets/36b2737d-6e99-4d39-857c-a3612f268051" />
+<img width="1306" height="760" alt="1" src="https://github.com/user-attachments/assets/04607717-b746-420a-aa90-d2cda5ff9eeb" />
 <img width="4032" height="1500" alt="4" src="https://github.com/user-attachments/assets/6618911b-0419-485b-901a-242391db9bd2" />
 
 # Hardware Specification
@@ -376,10 +376,12 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
            setup_var_cv CpuSetup 0x3F 0x1 0x1        // Down: 0.8 GHz Base, 12.5W TDP
            setup_var_cv CpuSetup 0x3F 0x1 0x2        // Up: 1.6 GHz Base, 25W TDP
             
-  - Power consumption can be further cut by disabling SD card reader and built-in cameras in BIOS. After disabling these devices, the total CPU package power consumption at idle reduced by roughly a watt (SD card 0.9w + cameras 0.1w) down to as low as 0.7w which is very similar to Windows side. (Disabling any other unused devices at BIOS level may help as well)
+  - Power consumption can be further reduced by disabling SD card reader. When the microSD card reader is enabled, CPU package does not enter C-state lower than C3 at idle. In order to reach similar level of power consumption as Windows side where the CPU reaches C8 state at idle, SD card reader needs to be disabled. (Disabling any other unused devices such as cameras at BIOS level may help as well)
 
-    <img width="250" height="430" alt="1" src="https://github.com/user-attachments/assets/12b36867-d8a0-4893-aab3-d3b9b6eb34ca" />
-        
+ - Powermetrics Report
+   
+   <img width="787" height="206" alt="Powermetrics" src="https://github.com/user-attachments/assets/a4970d7b-904d-4455-9b2f-78ceebeb816c" />
+
 Sleep/Resume
 
   - Supports S0, S3, and S4
