@@ -376,7 +376,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
            setup_var_cv CpuSetup 0x3F 0x1 0x1        // Down: 0.8 GHz Base, 12.5W TDP
            setup_var_cv CpuSetup 0x3F 0x1 0x2        // Up: 1.6 GHz Base, 25W TDP
             
-  - Power consumption can be further reduced by disabling SD card reader. When the microSD card reader is enabled, CPU package does not enter C-state lower than C3 at idle. In order to reach similar level of power consumption as Windows side where the CPU reaches C8 state at idle, SD card reader needs to be disabled. (Disabling any other unused devices such as cameras at BIOS level may help as well)
+  - Power consumption can be further reduced by disabling SD card reader. When the microSD card reader is enabled, CPU package does not enter C-state deeper than C3 at idle. In order to achieve similar level of power consumption as Windows side where the CPU reaches C8 state at idle, SD card reader needs to be disabled. (Disabling any other unused devices such as cameras at BIOS level may help as well)
 
  - Powermetrics Report
    
