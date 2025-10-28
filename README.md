@@ -39,19 +39,19 @@ Right side ports
 
 - Restart/Shutdown
 
-- S0 ModernStandby/Deep Idle (Idle/Lid close/Manual)
+- S0 Modern Standby/Deep Idle (Idle/Lid close/Manual)
 
 - S3 Suspend to RAM/Normal Sleep (Idle/Lid close/Manual)
   
 - S4 Hibernate/Standby (Immediate hibernation with Hibernatemode 25 or transition from S0 or S3 to S4 with hibernatemode 3)
   
-- Wake (Wake using power button: S0, S3, S4 / Wake using external USB peripherals: S0 / Lid open: S0)
+- Wake (S0: wake via power button/detachable trackpad/external USB peripherals; S3: power button; S4: power button)
 
-- Clamshell mode 
+- Clamshell mode (By design macOS only supports clamshell mode when on AC power)
 
-- Alps Trackpad(USB)/Wacom Touchscreen(I2C) with gestures
+- Detachable Alps Trackpad(USB)/Wacom Touchscreen(I2C) with gestures
 
-- Keyboard (PS/2; Function keys including Volume +/-, Brightness +/-)
+- Detachable Keyboard (PS/2; Function keys including Volume +/-, Brightness +/-)
 
 - Volume Up/Down button on left side of tablet
 
@@ -59,7 +59,7 @@ Right side ports
 
 - Display: 4K60FPS resolution via TB3/USB-C(DP-Alt-Mode) port/ Dim display on battery
 
-- Built-in Cameras. (Front and rear RGB Cameras; though, much better image with using iPhone as webcam)
+- Built-in Cameras. (Front and rear RGB Cameras; though, better image with using iPhone as webcam)
 
 - Audio: Built-in speaker; Headphone jack requires ALCPlugFix to get sound
 
@@ -172,7 +172,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
      - SSDT-PNLF.aml     (Fixes backlight control)
      - SSDT-USBP.aml     (ACPI USB Port Mapping; defines USB connector type for each USB ports at ACPI level)
      - SSDT-TB3HP.aml    (SSDT for Thunderbolt3 / Requires booting in Native Enumeration mode for hotplug)
-     - SSDT-S0.aml       (Enables S0 deep idle)
+     - SSDT-S0.aml       (Enables S0 deep idle; enable if Modern Standby is desired)
   
    Delete:
 
@@ -424,8 +424,8 @@ Sleep/Resume
          - Deep Idle(S0) to Standby(S4)
 
            <img width="994" height="67" alt="S0" src="https://github.com/user-attachments/assets/e4d19a8a-4291-4b6a-a1ba-c949af7207d6" />
-    
-           The battery drain during 9 hours of S0 is around 20% which is about 2.2% per hour.
+           
+                  The battery drain during 9 hours of S0 is around 20% which is about 2.2% per hour.
 
          - Normal Sleep(S3) to Standby(S4)     
            <img width="996" height="72" alt="3" src="https://github.com/user-attachments/assets/b1abd3a2-3f61-4980-8230-03d5e0d99ef6" />
