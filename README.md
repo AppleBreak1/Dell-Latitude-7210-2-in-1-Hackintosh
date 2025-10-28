@@ -39,7 +39,7 @@ Right side ports
 
 - Restart/Shutdown
 
-- S0 ModernStandby/Deep Idle (Idle/Lid close/Manual); Awful battery drain
+- S0 ModernStandby/Deep Idle (Idle/Lid close/Manual)
 
 - S3 Suspend to RAM/Normal Sleep (Idle/Lid close/Manual)
   
@@ -421,12 +421,14 @@ Sleep/Resume
       - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
       - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep(S3) or deep idle(S0) as set by standbydelay argument then decides whether to transition to standby mode(This is when HibernationFixup.kext is needed). If transitions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
     
-         Deep Idle(S0) to Standby(S4)
-         <img width="994" height="74" alt="S0" src="https://github.com/user-attachments/assets/39b7b080-d630-4f23-98e7-bf9523aa2726" />
+         - Deep Idle(S0) to Standby(S4)
 
+           <img width="994" height="67" alt="S0" src="https://github.com/user-attachments/assets/e4d19a8a-4291-4b6a-a1ba-c949af7207d6" />
+    
+           The battery drain during 9 hours of S0 is around 20% which is about 2.2% per hour.
 
-         Normal Sleep(S3) to Standby(S4)     
-         <img width="996" height="72" alt="3" src="https://github.com/user-attachments/assets/b1abd3a2-3f61-4980-8230-03d5e0d99ef6" />
+         - Normal Sleep(S3) to Standby(S4)     
+           <img width="996" height="72" alt="3" src="https://github.com/user-attachments/assets/b1abd3a2-3f61-4980-8230-03d5e0d99ef6" />
 
    - Hibernatemode 25 
 
