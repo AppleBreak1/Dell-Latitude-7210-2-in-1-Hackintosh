@@ -79,6 +79,27 @@ Right side ports
 - Fingerprint sensor
 - Screen auto-rotation
   
+# macOS
+
+macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also be possible with some spoofing)
+
+  - macOS High Sierra - Catalina
+    
+    - SMBIOS -> MacBookPro15,2 (For High Sierra)
+    - Set SecureBootModel -> Disabled
+    - UEFI -> APFS -> MinDate and MinVersion -> -1
+    - May require IGPU spoofing to older supported model. Refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for supported ig-platform-id
+    - May require CPUID spoofing to older supported model
+       
+  - macOS Big Sur ~ Ventura
+
+    - Works without making any changes to the posted EFI.
+
+  - macOS Sonoma ~ Sequoia
+
+    - To install or update to Sonoma 14.4+, Misc->Security->SecureBootModel needs to be set to disabled.
+    - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
+    - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
 
 # BIOS Settings
 
@@ -127,29 +148,6 @@ UEFI IFR settings
 Note: 
 
   - [Why disable CFG Lock?](https://dortania.github.io/OpenCore-Post-Install/misc/msr-lock.html#what-is-cfg-lock)
-
-
-# macOS
-
-macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also be possible with some spoofing)
-
-  - macOS High Sierra - Catalina
-    
-    - SMBIOS -> MacBookPro15,2 (For High Sierra)
-    - Set SecureBootModel -> Disabled
-    - UEFI -> APFS -> MinDate and MinVersion -> -1
-    - May require IGPU spoofing to older supported model. Refer to [WhateverGreen Manual](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) for supported ig-platform-id
-    - May require CPUID spoofing to older supported model
-       
-  - macOS Big Sur ~ Ventura
-
-    - Works without making any changes to the posted EFI.
-
-  - macOS Sonoma
-
-    - To install or update to Sonoma 14.4+, SecureBootModel needs to be disabled.
-    - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
-    - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
 
 # OpenCore Config
 
@@ -244,7 +242,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 
    - SecureBootModel -> j223
 
-- PlatformInfo -> Generic -> SystemProductName -> MacBookPro16,3
+- PlatformInfo -> Generic -> SystemProductName -> MacBookPro16,2
 - PlatformInfo -> Generic -> UpdateSMBIOSMode -> Custom
 
 - Theme -> [Blackosx/BSXm1](https://github.com/blackosx/BsxM1)
