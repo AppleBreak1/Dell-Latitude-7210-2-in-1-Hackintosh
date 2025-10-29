@@ -364,8 +364,8 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
   
     - BIOS Enumeration Mode -> VarStore: Setup, VarOffset: 0xA09)
 
-           setup_var_cv Setup 0xA08 0x1 0x1     (Native) - default
-           setup_var_cv Setup 0xA08 0x1 0x0     (BIOS Assist)
+           setup_var_cv Setup 0xA09 0x1 0x1     (Native) - default
+           setup_var_cv Setup 0xA09 0x1 0x0     (BIOS Assist)
 
   - Configurable TDP Boot Mode can be set via UEFI variable mod
 
