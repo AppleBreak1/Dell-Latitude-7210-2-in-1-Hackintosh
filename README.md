@@ -100,7 +100,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
     - To install or update to Sonoma 14.4+, Misc->Security->SecureBootModel needs to be set to disabled.
     - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
     - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
-
+      
 # BIOS Settings
 
 BIOS Revision: 1.40.0
@@ -383,8 +383,9 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 Sleep/Resume
 
   - Supports S0, S3, and S4
-  - After S0 resume, TB3/USB-C USB3 hotplug function is lost, touchscreen remains functional.
+  - After S0 resume, TB3/USB-C USB3 is lost; DP-Alt mode, USB-C USB2, and touchscreen remain functional.
   - After S0 resume, IGPU frequency may get stuck at max if igfxfw property is used.
+  - The system may fail to wake from S0 if TB or USB3 devices are connected to USB-C ports.
   - After S3 resume, TB3/USB-C USB3 hotplug remain functional but touchscreen function is lost. (Workaround -> hibernation with hibernatemode 25 as needed)
   - After S4 resume, TB3 hotplug and touchscreen remain functional.
   - Disable lidwake for S3 and S4 as it can cause wake issues.
