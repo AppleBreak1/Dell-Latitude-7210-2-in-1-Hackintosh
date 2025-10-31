@@ -242,7 +242,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 
    - SecureBootModel -> j223
 
-- PlatformInfo -> Generic -> SystemProductName -> MacBookPro16,2
+- PlatformInfo -> Generic -> SystemProductName -> MacBookPro16,3
 - PlatformInfo -> Generic -> UpdateSMBIOSMode -> Custom
 
 - Theme -> [Blackosx/BSXm1](https://github.com/blackosx/BsxM1)
@@ -310,11 +310,10 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
   - Unfortunately, the headphone jack on this laptop requires [AlcPlugFix](https://github.com/black-dragon74/ALCPlugFix-Swift) to be functional. (alc-verbs <01000000>, Node ID 0x19, Param 20, temporary disable SIP)
   - Boot-Chime not working in OpenCore boot menu -> Looking at the debug log, it's similar to issue described [here](https://github.com/acidanthera/bugtracker/issues/963). The solution is to upsample audio file to 48kHz. However, I usually don't like to use Boot-Chime as AudioDXE.efi driver causes a delay when the system posts and breaks audio in Windows (The fix for Windows can be found in OpenCore's Configuration.pdf). 
 
-  CPU Powermanagement
+  Powermanagement
 
   - Inject CPUFriend.kext with configured CPUFriendDataProvider.kext.
-  - [VoltageShift.kext](https://github.com/sicreative/VoltageShift) to disable Intel Turbo Boost, undervolt, and set power limit to keep the temperature and fan noise down. Features like 
-    BD PROCHOT may also be disabled via Voltageshift as it can read and write MSR values.
+  - [VoltageShift.kext](https://github.com/sicreative/VoltageShift) (This tool can be used to disable Intel Turbo Boost, undervolt, and set power limit to keep the temperature down. Features like BD PROCHOT and Turbo Ratio Limit may also be modified via Voltageshift as it can read and write MSR values.
     <br>
     
      - My Voltageshift settings as reference
@@ -327,7 +326,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
        |        [PL2][13W]
        ```
 
-    - Setting turbo ratio limit rather than disabling turbo boost
+    - Setting Turbo Ratio Limit rather than disabling turbo boost
 
       - MSR for turbo ratio limit is 0x1ad
 
@@ -348,7 +347,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
     
   - Thunderbolt Configuration
 
-    - BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption in BIOS Assist Enumeration mode is lower by more than a watt(roughly 1.5w) at idle state as the TB controller power stays off as long as the devices are not connected) 
+    - BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption in BIOS Assist Enumeration mode is lower by more than a watt(roughly 1.5w) at idle state as the TB controller power stays off as long as the devices are not connected USB-C ports. This allows CPU package to enter C-states deeper than C2 and save more power) 
     - Booting to Windows 10 sets the mode to Native Enumeration on next boot (OS Controls TB device, hotplug works)
     - Booting to macOS sets the mode to BIOS Assist on next boot (BIOS handles the device enumeration, TB device works only if plugged preboot)
 
@@ -379,6 +378,10 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
  - Powermetrics Report
    
    <img width="787" height="206" alt="Powermetrics" src="https://github.com/user-attachments/assets/a4970d7b-904d-4455-9b2f-78ceebeb816c" />
+
+ - Battery Discharge Rate at Idle
+
+<img width="525" height="527" alt="Battery" src="https://github.com/user-attachments/assets/144a2964-18ea-4943-899f-52217c95b9a8" />
 
 Sleep/Resume
 
