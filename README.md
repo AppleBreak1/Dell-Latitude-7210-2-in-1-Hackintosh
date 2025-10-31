@@ -347,7 +347,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
     
   - Thunderbolt Configuration
 
-    - BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption in BIOS Assist Enumeration mode is lower by more than a watt(roughly 1.5w) at idle state as the TB controller power stays off as long as the devices are not connected USB-C ports. This allows CPU package to enter C-states deeper than C2 and save more power) 
+    - BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption in BIOS Assist Enumeration mode is lower by more than a watt(roughly 1.5w) at idle state as the TB controller power stays off as long as the devices are not connected to USB-C ports. This allows CPU package to enter C-states deeper than C2 and save more power) 
     - Booting to Windows 10 sets the mode to Native Enumeration on next boot (OS Controls TB device, hotplug works)
     - Booting to macOS sets the mode to BIOS Assist on next boot (BIOS handles the device enumeration, TB device works only if plugged preboot)
 
