@@ -221,6 +221,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
      - VoodooPS2Controller/VoodooPS2Keyboard (For Keyboard)
      - [VoodooI2C](https://github.com/VoodooI2C/VoodooI2C)/VoodooInput/VoodooI2CServices/VoodooGPIO/VoodooI2CHID (For Trackpad/Touchscreen)
      - [BrightnessKeys.kext](https://github.com/acidanthera/BrightnessKeys) (For Brightness keys to work; use with SSDT-ACOS.aml)
+     - [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup) (Required for hibernation(S4) with hibernatemode 3)
 
   Emulate:
 
