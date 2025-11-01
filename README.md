@@ -389,7 +389,7 @@ Sleep/Resume
   - Supports S0, S3, and S4
   - After S0 resume, TB3/USB-C USB3 is lost; DP-Alt mode, USB-C USB2, and touchscreen remain functional.
   - System may fail to wake from S0 if TB or USB3 devices are connected to USB-C ports.
-  - After S0 resume, IGPU frequency may get stuck at max if igfxfw property is used.
+  - After S0 resume, IGPU frequency may get stuck at max if igfxfw property is used. You may inject rps-control property as an alternative.
   - After S3 resume, TB3/USB-C USB3 hotplug remain functional but touchscreen function is lost. (Workaround -> hibernation with hibernatemode 25 as needed)
   - After S4 resume, TB3 hotplug and touchscreen remain functional.
   - Disable lidwake for S3 and S4 as it can cause wake issues.
