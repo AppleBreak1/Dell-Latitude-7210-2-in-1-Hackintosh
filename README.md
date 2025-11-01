@@ -170,7 +170,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
      - SSDT-PNLF.aml     (Fixes backlight control)
      - SSDT-USBP.aml     (ACPI USB Port Mapping; defines USB connector type for each USB ports at ACPI level)
      - SSDT-TB3HP.aml    (SSDT for Thunderbolt3 / Requires booting in Native Enumeration mode for hotplug)
-     - SSDT-S0.aml       (Enables S0 deep idle; enable if Modern Standby is desired)
+     - SSDT-S0.aml       (Enables [Deep Idle](https://pikeralpha.wordpress.com/2017/01/12/debugging-sleep-issues/); enable if Modern Standby(S0) is desired)
   
    Delete:
 
