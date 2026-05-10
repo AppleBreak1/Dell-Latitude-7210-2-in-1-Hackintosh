@@ -57,11 +57,13 @@ Right side ports
 
 - Pen PN579X: Limited functionality but pen hovering and top barrel button (right click) works.
 
-- Display: 4K60FPS resolution via TB3/USB-C(DP-Alt-Mode) port/ Dim display on battery
+  Note: if the pen has been paired in Windows, it can continue to function in macOS without re-pairing given that the Bluetooth supports HID Proxy.
+
+- Display: 4K60Hz resolution via TB3/USB-C(DP-Alt-Mode) port/ Dim display on battery
 
 - Built-in Cameras. (Front and rear RGB Cameras; though, better image with using iPhone as webcam)
 
-- Audio: Built-in speaker; Headphone jack requires ALCPlugFix to get sound
+- Audio: Built-in speakers and microphone; Headphone jack requires ALCPlugFix to get sound
 
 - Battery Status
 
@@ -78,6 +80,7 @@ Right side ports
 - DRM in Safari/Apple TV+ (Chrome browser will do)
 - Fingerprint sensor
 - Screen auto-rotation
+- Infrared(IR) facial recognition
   
 # macOS
 
@@ -97,7 +100,7 @@ macOS: Big Sur ~ Ventura (Tested to work but older macOS like Sierra should also
 
   - macOS Sonoma ~ Sequoia
 
-    - To install or update to Sonoma 14.4+, Misc->Security->SecureBootModel needs to be set to disabled.
+    - To install or update to Sonoma 14.4+, Misc->Security->SecureBootModel needs to be set to Disabled.
     - To fix black screen on internal display for Sonoma+, Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) property is necessary
     - For macOS Sonoma+, Broadcom Wi-Fi has to depend on [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher) patch to be functional.
       
@@ -157,7 +160,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 
   ADD:
 
-     - SSDT-AC.aml       (AC adapter device injection 6F, 04; necessary for SSDT-TB3HP.aml to be injected correctly when booting in TB3 BIOS Assist enumeration mode)
+     - SSDT-AC.aml       (AC adapter device injection of _PRW 6F, 04; necessary for SSDT-TB3HP.aml to be injected when booting in TB3 BIOS Assist enumeration mode)
      - SSDT-ACOS.aml     (SSDT patch to allow Dell keyboard function keys to work, such as brightness +/-; use with BrightnessKeys.kext)
      - SSDT-AWAC.aml     (Disables AWAC clock and HPET; enables RTC to fix system clock)
      - SSDT-ALSD.aml     (Ambient Light sensor fix; works with SMCLightSensor kext; "Slightly dim the display on battery" feature becomes functional)
@@ -165,7 +168,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
      - SSDT-DMAR.aml     (Modified DMAR table to prevent issues when enabling AppleVTD)
      - SSDT-EC-USBX.aml  (Fake embedded controller with USB power properties)
      - SSDT-LPCB.aml     (Injects fake devices, ARTC, DMAC, FWHD, and PMCR; cosmetic)
-     - SSDT-MCHC.aml     (Injects fake MCHC device)
+     - SSDT-MCHC.aml     (Injects MCHC device)
      - SSDT-PLUG.aml     (Injects plugin type 1 to load XCPM for CPU PMGMT; No longer required beginning with Monterey 12.3)
      - SSDT-PNLF.aml     (Fixes backlight control)
      - SSDT-USBP.aml     (ACPI USB Port Mapping; defines USB connector type for each USB ports at ACPI level)
@@ -267,8 +270,8 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 
   Display 
   -  Kernel Panic right before reaching desktop-> Injecting [enable-dpcd-max-link-rate-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-invalid-maximum-link-rate-issue-on-some-laptops-dell-xps-15-9570-etc) was required to resolve this.
-  -  Black screen on built-in display -> Injecting [enable-backlight-registers-fix](enable-backlight-registers-fix ) was required to resolve this.
-  -  [3-minute Black screen](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) on built-in display for Sonoma+ -> Injecting enable-backlight-registers-alternative-fix was required to resolve this.
+  -  Black or dimmed screen on built-in display -> Injecting [enable-backlight-registers-fix](enable-backlight-registers-fix ) was required to resolve this.
+  -  3-minute black or dimmed screen on built-in display for Sonoma+ -> Injecting [enable-backlight-registers-alternative-fix](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md#fix-the-3-minute-black-screen-issue-on-kblcfl-platforms-running-macos-134-or-later) was required to resolve this.
   -  Black screen on built-in display when rotating or connecting/disconnecting to/from external display -> This was due to using custom resolution to enable HIDPI resolution. Workaround is to set display resolution back to its default in prior and scale the resolution afterwards.
   -  Auto-rotation feature does not work. To manually rotate the screen, press and hold option/alt key(Ventura) and go to Display setting in System Settings for rotation option to show up in display settings. Alternatively, use [displayplacer](https://github.com/jakehilborn/displayplacer). One can create multiple bash scripts for each screen resolution and simply change resolution with a click or a tap.
 
@@ -276,7 +279,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 
   - Adding Custom HiDPI resolutions
 
-    To add custom HiDPI resolutions, we need to create a display override file to be placed in Library(Not System/Library) folder for Big Sur+. Refer to Rehabman's [guide](https://www.tonymacx86.com/threads/adding-using-hidpi-custom-resolutions.133254/) for the instruction and you may use this [Tool](https://codeclou.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/) for convenience. Manually added custom resolutions may not show up in Display preferences but they will show up as an available resolutions in third party display resolution managing apps like SwitchResX or displayplacer tool.
+    To add custom HiDPI resolutions, we need to create a display override file to be placed in Library(Not System/Library) folder for Big Sur+. Refer to Rehabman's [guide](https://www.tonymacx86.com/threads/adding-using-hidpi-custom-resolutions.133254/) for the instruction and you may use this [tool](https://codeclou.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/) for convenience. Manually added custom resolutions may not show up in Display preferences but they will show up as an available resolutions in third party display resolution managing apps like SwitchResX or displayplacer tool.
 
     Sample
 
@@ -345,6 +348,15 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
             ./voltageshift write 0x1ad 0x28281e1e1e1e1e1e      // limit to 30 for all number of active cores
             ./voltageshift write 0x1ad 0x2828242424242424      // limit to 36 for all number of active cores
             ./voltageshift write 0x1ad 0x28281e1e1e1e1e24      // limit to 30 for 2 to 6 active cores and limit to 36 for 1 active core
+
+      - Confirm the changes made
+
+            ./voltageshift mon
+            ./voltageshift info
+
+        <img width="544" height="230" alt="Monitor" src="https://github.com/user-attachments/assets/82e6989b-fa92-4703-a6c4-d5bcd06f96a7" />
+
+
     
   - Thunderbolt Configuration
 
@@ -388,7 +400,7 @@ Sleep/Resume
 
   - Supports S0, S3, and S4
   - After S0 resume, TB3/USB-C USB3 is lost; DP-Alt mode, USB-C USB2, and touchscreen remain functional.
-  - System may fail to wake from S0 if TB or USB3 devices are connected to USB-C ports.
+  - System may fail to wake from S0 if TB or USB3 devices are connected to USB-C ports. (No issue however, if USB-C ports are set to be used for display port or USB only in BIOS) 
   - After S0 resume, IGPU frequency may get stuck at max if igfxfw property is used. You may inject rps-control property as an alternative.
   - After S3 resume, TB3/USB-C USB3 hotplug remain functional but touchscreen function is lost. (Workaround -> hibernation with hibernatemode 25 as needed)
   - After S4 resume, TB3 hotplug and touchscreen remain functional.
@@ -421,8 +433,8 @@ Sleep/Resume
       - Misc -> Boot -> HibernateSkipsPicker -> Yes
       - Do not apply AppleRTC kernel patch if applied (patch to disable RTC wake scheduling)
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
-      - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in standby mode; refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
-      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep(S3) or deep idle(S0) as set by standbydelay argument then decides whether to transition to standby mode(This is when HibernationFixup.kext is needed). If transitions to standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
+      - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in Standby mode(S4); refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
+      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep(S3) or deep idle(S0) as set by standbydelay argument then decides whether to transition to Standby mode(This is when HibernationFixup.kext is needed). If transitions to Standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
     
          - Deep Idle(S0) to Standby(S4)
 
@@ -444,7 +456,7 @@ Sleep/Resume
         <img width="946" height="42" alt="25" src="https://github.com/user-attachments/assets/906eecd2-27d6-4e46-bd55-9bb41630a42c" />
 
 
- - Note 1: Make sure to drop original DMAR table and inject modified DMAR table to load AppleVTD as original DMAR table can cause wake issue from hibernation. Or, you may just disable AppleVTD by setting DisableIoMapper quirk to Yes. 
+ - Note 1: Make sure to drop original DMAR table and inject modified DMAR table to load AppleVTD as original DMAR table can cause wake issue from hibernation(S4). Or, you may just disable AppleVTD by setting DisableIoMapper quirk to Yes. 
  - Note 2: ACPI -> Quirk -> ResetHwSig -> True is required to fix issues with wake from standby(S4).
    
  - Note 3: When in standby mode, the system could only wake via power button and it will continue from splash screen then straight into macOS if HibernateSkipsPicker is set to Yes
@@ -454,11 +466,11 @@ Sleep/Resume
    
 Wi-Fi/Bluetooth
 
- - Comes with Intel® Wi-Fi 6 AX201 NGW -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. (The wlan slot on this tablet is meant for one sided M.2 module and trying to fit in BCM94360NG can feel a bit tight. Ended up not tightening the screw all the way)
+ - Comes with Intel® Wi-Fi 6 AX201 NGW -> Swapped with BCM94360NG module to enjoy Airplay/Airdrop/continuity features. (The WLAN slot on this tablet is meant for one sided M.2 module and trying to fit in BCM94360NG can feel a bit tight. I ended up not tightening the screw all the way)
 
  - BCM94360NG speed issue with macOS
 
-   You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround
+   You will find discussion about this problem from Acidenthera bugtracker #[1532](https://github.com/acidanthera/bugtracker/issues/1532) with possible workaround.
    
    On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of driver.
 
