@@ -61,9 +61,9 @@ Right side ports
 
 - Display: 4K60Hz resolution via TB3/USB-C(DP-Alt-Mode) port/ Dim display on battery
 
-- Built-in Cameras. (Front and rear RGB Cameras; though, better image with using iPhone as webcam)
+- Built-in Cameras. (Front and rear RGB cameras; though, better image with using iPhone as webcam)
 
-- Audio: Built-in speakers and microphone; Headphone jack requires ALCPlugFix to get sound
+- Audio: Built-in speakers and microphone; headphone jack requires ALCPlugFix to get sound
 
 - Battery Status
 
@@ -361,12 +361,12 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
   - Thunderbolt Configuration
 
     - BIOS Assist Enumeration (Compare to Native Enumeration mode, CPU package total power consumption in BIOS Assist Enumeration mode is lower by more than a watt(roughly 1.5w) at idle state as the TB controller power stays off as long as the devices are not connected to USB-C ports. This allows CPU package to enter C-states deeper than C2 and save more power) 
-    - Booting to Windows 10 sets the mode to Native Enumeration on next boot (OS Controls TB device, hotplug works)
-    - Booting to macOS sets the mode to BIOS Assist on next boot (BIOS handles the device enumeration, TB device works only if plugged preboot)
+    - Booting to Windows 10 sets the mode to Native Enumeration on next boot (OS has the complete control of enumeration and hotplug works)
+    - Booting to macOS sets the mode to BIOS Assist on next boot (BIOS handles the device enumeration, TB devices work only if plugged preboot)
 
       By default, Auto Switch for BIOS Enumeration mode is enabled. (Not configurable from standard BIOS menu). This can be quite annoying with frequent dual-booting of macOS and Windows as the warning message "Thunderbolt PCIe Device Enumeration Mode Has Switched to XXXX" will pop up every time after having to boot to Windows or macOS. 
 
-      To avoid this, we can disable Auto Switch via UEFI var mod and set the enumeration mode of choice depending on personal preference. As mentioned, Native mode has higher power consumption at idle but hotplug works where as BIOS Assist mode has lower power consumption at idle but will lose TB/USB-C USB3 hotplug.
+      To avoid this, we can disable Auto Switch via UEFI var mod and set the enumeration mode of choice depending on personal preference. As mentioned, Native mode has higher power consumption at idle but hotplug works where as BIOS Assist mode has lower power consumption at idle but will lose hotplug on TB3/USB3/USB-C port.
 
 
     - Disable Auto Switch -> (VarStore: Setup, VarOffset: 0xA08)
@@ -399,10 +399,9 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
 Sleep/Resume
 
   - Supports S0, S3, and S4
-  - After S0 resume, TB3/USB-C USB3 is lost; DP-Alt mode, USB-C USB2, and touchscreen remain functional.
-  - System may fail to wake from S0 if TB or USB3 devices are connected to USB-C ports. (No issue however, if USB-C ports are set to be used for display port or USB only in BIOS) 
+  - After S0 resume, Thunderbolt controller is lost and system may fail to wake if TB or USB3 devices are connected to USB-C ports. However, no issue if USB-C ports are set to be used for display port or USB only in BIOS. DP-Alt mode, USB2/USB-C, and touchscreen remain functional. 
   - After S0 resume, IGPU frequency may get stuck at max if igfxfw property is used. You may inject rps-control property as an alternative.
-  - After S3 resume, TB3/USB-C USB3 hotplug remain functional but touchscreen function is lost. (Workaround -> hibernation with hibernatemode 25 as needed)
+  - After S3 resume, TB3/USB3/USB-C hotplug remain functional but touchscreen function is lost. (Workaround -> hibernation with hibernatemode 25 as needed)
   - After S4 resume, TB3 hotplug and touchscreen remain functional.
   - Disable lidwake for S3 and S4 as it can cause wake issues.
   - bluetoothd process with high cpu usage and power consumption after resume from sleep -> Workaround is to use [Bluesnooze](https://github.com/odlp/bluesnooze)
@@ -474,7 +473,7 @@ Wi-Fi/Bluetooth
    
    On Windows, internet speed works fine as it should with link speed up to 866 Mbps. However on macOS, speed becomes an issue. You'll notice that Tx rate is maxed at 434 Mbps with limited spatial stream to 1 (NSS=1) on cold boot. To gain its maximum capable speed, it seems that only workaround for now is to warm boot from Windows to macOS while having Broadcom Network Adapter driver version [7.35.295.2](https://www.catalog.update.microsoft.com/Search.aspx?q=Broadcom%20802.11n%20Network%20Adapter) (7/19/2015) installed. Note that this will only work with this specific version of driver.
 
-   The particular BCM94360NG model that I have for this laptop has crash issues on windows 10 when the Wi-Fi drivers are installed. As a workaround, one of the USB-C ports needs to be occupied with USB device to prevent crash on Windows 10.
+   The particular BCM94360NG model that I have for this laptop has crash issues on windows 10 when the Wi-Fi drivers are installed. As a workaround, one of the USB-C ports needs to be occupied with a USB device to prevent crash on Windows 10.
 
 
 WWAN slot
