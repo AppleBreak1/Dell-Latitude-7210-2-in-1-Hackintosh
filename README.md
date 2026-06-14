@@ -201,7 +201,7 @@ Mostly follow OpenCore's Configuration.pdf and [Comet-Lake](https://dortania.git
       |  device-id | <9B3E0000>	| |
       |  enable-backlight-registers-fix | <01000000> | Required to prevent black screen |
       |  enable-backlight-registers-alternative-fix | <01000000> | Required to prevent black screen (Sonoma+) |   
-      |  enable-dpcd-max-link-rate-fix | <01000000> | Required to prevent kernel panic from a division-by-zero that happens with Sharp displays |
+      |  enable-dpcd-max-link-rate-fix | <01000000> | Fix for the invalid maximum link rate issue triggering graphics-related kernel panic |
       |  disable-agdc | <01000000> | May be necessary to get HDMI audio when the display cables are routed through thunderbolt docking station such as WD19TBS |
       |  igfxfw | <02000000> 	| Forces loading Apple GuC firmware to increase performance; either use rps-control 1 or igfxfw |
 
@@ -433,7 +433,7 @@ Sleep/Resume
       - Do not apply AppleRTC kernel patch if applied (patch to disable RTC wake scheduling)
       - Inject [HibernationFixup.kext](https://github.com/acidanthera/HibernationFixup)
       - Add boot-arg -> hbfx-ahbm=5 (Need this flag with value of at least 1 to put system in Standby mode(S4); refer to its [manual](https://github.com/acidanthera/HibernationFixup) for various configuration)
-      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep(S3) or deep idle(S0) as set by standbydelay argument then decides whether to transition to Standby mode(This is when HibernationFixup.kext is needed). If transitions to Standby, it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
+      - Set standbydelay time that suits your need in terminal (This sets the RTC alarm wake scheduling). The system will darkwake from normal sleep(S3) or deep idle(S0) as set by standbydelay argument then decides whether to transition to Standby mode(This is when HibernationFixup.kext is needed). If transitions to Standby(S4), it saves current session to disk in var/vm/sleepimage and turns off some of the hardware systems to save power)
     
          - Deep Idle(S0) to Standby(S4)
 
@@ -446,7 +446,7 @@ Sleep/Resume
 
    - Hibernatemode 25 
 
-      Hibernatemode 25 will immediately put system to standby preserving battery life.
+      Hibernatemode 25 will immediately put system to Standby(S4) mode preserving battery life.
       - pmset hibernatemode to 25
       - pmset standby to 1
       - Misc -> Boot -> Hibernatemode -> NVRAM
@@ -456,9 +456,9 @@ Sleep/Resume
 
 
  - Note 1: Make sure to drop original DMAR table and inject modified DMAR table to load AppleVTD as original DMAR table can cause wake issue from hibernation(S4). Or, you may just disable AppleVTD by setting DisableIoMapper quirk to Yes. 
- - Note 2: ACPI -> Quirk -> ResetHwSig -> True is required to fix issues with wake from standby(S4).
+ - Note 2: ACPI -> Quirk -> ResetHwSig -> True is required to fix issues with wake from Standby(S4).
    
- - Note 3: When in standby mode, the system could only wake via power button and it will continue from splash screen then straight into macOS if HibernateSkipsPicker is set to Yes
+ - Note 3: When in Standby mode, the system could only wake via power button and it will continue from splash screen then straight into macOS if HibernateSkipsPicker is set to Yes
 
                
 **Hardware**
